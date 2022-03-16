@@ -22,6 +22,7 @@ let printOutgoing = false;
 let localReceivePort = 7403
 let localSendPort = 7404
 let localWSstate = false;
+let wsPort = 9090;
 let thisNode = {
   name: null,
   shareGPSData: true,
@@ -94,6 +95,7 @@ if(process.argv[2] === '-c' && process.argv[3]){
   localReceivePort = connectSettings.localReceivePort
   localSendPort = connectSettings.localSendPort
   localWSstate = connectSettings.localWSstate
+  wsPort = connectSettings.wsPort
   thisNode = connectSettings.thisNode
   if(localWSstate === true){
     localWebsocket()
@@ -273,7 +275,7 @@ function login(){
 
     // Run local ws server to pass all data via JSON
     if(answers.transmitJSON == 'Yes'){
-      localWSstate = true      
+      localWSstate = true
     }
     config.set(configFileName + '.localWSstate', localWSstate)
 
@@ -552,14 +554,14 @@ function tryConnect(){
 }
 
 function localWebsocket(){
-  wss = new WebSocket.Server({ port: 8080 });
+  wss = new WebSocket.Server({ port: wsPort });
   console.log(wss)
   wss.on('connection', function connection(localWS) {
     console.log('local websocket connected to an app on this machine')
-    //TODO: Need to figure out how to send on 'ws' (the allhands ws) within this function. 
+    //TODO: Need to figure out how to send on 'ws' (the allhands ws) within this function.
     /*
     localWS.on('message', function message(data) {
-      
+
       // send incoming JSON control data out to allhands network
       msg = JSON.parse(data)
       console.log(msg)
@@ -585,4 +587,3 @@ function localBroadcast(msg){
   }
   });
 }
-
