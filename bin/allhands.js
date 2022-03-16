@@ -22,7 +22,7 @@ let printOutgoing = false;
 let localReceivePort = 7403
 let localSendPort = 7404
 let localWSstate = false;
-let wsPort = 9090;
+let wsPort = 8080;
 let thisNode = {
   name: null,
   shareGPSData: true,
